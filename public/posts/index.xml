@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Posts on 人 </title>
+    <link>http://localhost:1313/posts/</link>
+    <description>Recent content in Posts on 人 </description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Thu, 22 Oct 2026 10:00:00 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>你好，世界</title>
+      <link>http://localhost:1313/posts/hello-world/</link>
+      <pubDate>Thu, 22 Oct 2026 10:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/posts/hello-world/</guid>
+      <description>&lt;p&gt;你好，世界！这是我的第一篇博客文章。&lt;/p&gt;
+&lt;p&gt;本博客基于 &lt;strong&gt;Hugo&lt;/strong&gt; 静态站点生成器构建，采用 &lt;strong&gt;PaperMod&lt;/strong&gt; 主题，内容以 Markdown 编写。&lt;/p&gt;
+&lt;p&gt;托管方案采用零成本组合：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Cloudflare Pages&lt;/strong&gt; 作为主托管，自动从 GitHub 仓库构建部署；&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GitHub Pages&lt;/strong&gt; 作为备用托管，通过 GitHub Actions 工作流发布。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;后续我会在这里记录学习笔记与技术分享，敬请期待。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

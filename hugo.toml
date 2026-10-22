@@ -1,0 +1,10 @@
+# 部署到 Cloudflare Pages / GitHub Pages 后，替换为实际域名
+baseURL = 'https://example.pages.dev/'
+languageCode = 'zh-CN'
+title = '人型害虫观察站'
+theme = 'PaperMod'
+
+[params]
+  ShowReadingTime = true
+  ShowShareButtons = true
+  defaultTheme = 'auto' # 跟随系统明暗主题
