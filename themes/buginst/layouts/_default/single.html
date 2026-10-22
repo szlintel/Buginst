@@ -1,0 +1,64 @@
+{{ define "main" }}
+<div class="archive">
+  <div class="archive-banner">
+    <h1>人型害虫观察档案</h1>
+    <div class="sub">CRIMINAL ARCHIVE · {{ .Params.archiveno }}</div>
+  </div>
+  <div class="paper archive-paper">
+
+    <div class="archive-no">建档编号：{{ .Params.archiveno }}</div>
+
+    <div class="archive-grid">
+      <div class="mugshot">
+        <div class="frame">
+          {{ with .Params.photo }}
+          <img src="{{ . | relURL }}" alt="{{ $.Params.name }}">
+          {{ else }}
+          <svg viewBox="0 0 200 240" aria-label="影像暂缺">
+            <rect width="200" height="240" fill="#eceadf"></rect>
+            <g fill="#8b8778">
+              <circle cx="100" cy="88" r="38"></circle>
+              <path d="M40 200 Q100 120 160 200 L160 240 L40 240 Z"></path>
+            </g>
+            <text x="100" y="228" text-anchor="middle" font-size="13" fill="#6b6659">（影像暂缺）</text>
+          </svg>
+          {{ end }}
+          <div class="verdict-stamp">已判决</div>
+        </div>
+        {{ with .Params.photocap }}<div class="cap">{{ . }}</div>{{ end }}
+      </div>
+      <table class="profile">
+        <tbody>
+          {{ with .Params.name }}<tr><th>姓　　名</th><td>{{ . }}</td></tr>{{ end }}
+          {{ with .Params.identity }}<tr><th>身　　份</th><td>{{ . }}</td></tr>{{ end }}
+          {{ with .Params.charges }}<tr><th>罪　　名</th><td>{{ . }}</td></tr>{{ end }}
+          {{ with .Params.sentence }}<tr><th>刑　　种</th><td>{{ . }}</td></tr>{{ end }}
+          {{ with .Params.status }}<tr><th>案件状态</th><td>{{ . }}</td></tr>{{ end }}
+          {{ with .Params.judgmentdate }}<tr><th>判决日期</th><td>{{ . }}</td></tr>{{ end }}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="doc-body archive-content">
+      {{ .Content }}
+    </div>
+
+    {{ with .Params.sources }}
+    <div class="source-box">
+      <b>权威来源：</b>
+      <ul>
+        {{ range . }}
+        <li>{{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .text }}</a>{{ else }}{{ .text }}{{ end }}</li>
+        {{ end }}
+      </ul>
+    </div>
+    {{ end }}
+
+    <div class="sign-block">
+      {{ partial "seal.html" . }}
+      <div class="org">人型害虫观察站</div>
+      <div>二〇二六年十月二十三日</div>
+    </div>
+  </div>
+</div>
+{{ end }}

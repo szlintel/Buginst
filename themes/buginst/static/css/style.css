@@ -1,0 +1,153 @@
+:root {
+  --red: #c7000b;
+  --red-deep: #a3000a;
+  --paper: #fdfcf6;
+  --desk: #e6e2d8;
+  --ink: #1a1a1a;
+  --ink-soft: #444;
+  --rule: #d8d2c4;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--desk);
+  color: var(--ink);
+  font-family: "FangSong", "仿宋", "FangSong_GB2312", "STFangsong", serif;
+  padding: 2.5rem 1rem 5rem;
+  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,0.012) 0 1px, transparent 1px 3px);
+}
+
+/* ---------- 纸张 ---------- */
+.paper {
+  position: relative;
+  max-width: 860px; margin: 3.2rem auto 0;
+  background: var(--paper);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 18px 50px rgba(0,0,0,0.15);
+  padding: 4.2rem 4.5rem 3rem;
+  background-image:
+    radial-gradient(rgba(199,0,11,0.018) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(0,0,0,0.02), transparent 30%);
+  background-size: 22px 22px, 100% 100%;
+}
+@media (max-width: 720px) { .paper { padding: 3rem 1.6rem 2.2rem; } }
+
+/* ---------- 红头 ---------- */
+.doc-head { text-align: center; }
+.doc-head .star { color: var(--red); font-size: 1.4rem; letter-spacing: 0.6em; text-indent: 0.6em; }
+.doc-head h1 {
+  color: var(--red);
+  font-family: "SimSun", "宋体", "STZhongsong", serif;
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5.2vw, 3rem);
+  letter-spacing: 0.14em;
+  margin: 0.5rem 0 0.9rem;
+  text-shadow: 0 1px 0 rgba(163,0,10,0.15);
+}
+.doc-no {
+  font-size: 1rem; color: var(--ink);
+  letter-spacing: 0.08em; margin-bottom: 1.1rem;
+}
+.red-rule { border: none; border-top: 3.5px solid var(--red); margin: 0 0 3px; }
+.red-rule.thin { border-top-width: 1.5px; margin-bottom: 2.4rem; }
+
+/* ---------- 文件正文 ---------- */
+.doc-title {
+  font-family: "SimSun", "宋体", serif;
+  font-size: clamp(1.25rem, 3.2vw, 1.65rem);
+  font-weight: 700; text-align: center;
+  line-height: 1.7; margin-bottom: 1.8rem;
+}
+.doc-body { font-size: 1.06rem; line-height: 2.05; }
+.doc-body p { text-indent: 2em; margin-bottom: 0.4em; text-align: justify; }
+
+/* ---------- 附件表格（立案登记表） ---------- */
+.attachment-label {
+  font-family: "SimSun", "宋体", serif; font-weight: 700;
+  margin: 2.2rem 0 0.6rem; font-size: 1.05rem;
+}
+table.cases { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+table.cases th, table.cases td {
+  border: 1px solid var(--ink); padding: 0.45rem 0.5rem; text-align: center;
+}
+table.cases th { font-family: "SimSun", "宋体", serif; background: rgba(199,0,11,0.05); white-space: nowrap; }
+table.cases td a { color: var(--red-deep); text-decoration: none; border-bottom: 1px dotted var(--red-deep); }
+table.cases td a:hover { background: rgba(199,0,11,0.07); }
+table.cases td.dead { color: #777; }
+
+/* ---------- 落款与印章 ---------- */
+.sign-block { position: relative; margin-top: 3rem; text-align: right; font-size: 1.06rem; line-height: 2; }
+.sign-block .org { font-weight: 700; }
+.seal {
+  position: absolute; right: 2.2rem; top: -3.2rem;
+  width: 158px; height: 158px;
+  transform: rotate(-14deg);
+  opacity: 0.9; pointer-events: none;
+  mix-blend-mode: multiply;
+}
+@media (max-width: 720px) { .seal { width: 120px; height: 120px; right: 0.6rem; top: -2.4rem; } }
+
+/* ---------- 抄送尾栏 ---------- */
+.foot-rule { border: none; border-top: 1.5px solid var(--ink); margin: 3rem 0 0.8rem; }
+.cc { font-size: 0.95rem; line-height: 1.9; }
+.cc b { font-family: "SimSun", "宋体", serif; }
+.print-line {
+  display: flex; justify-content: space-between; font-size: 0.9rem;
+  border-top: 1.5px solid var(--ink); margin-top: 0.5rem; padding-top: 0.5rem;
+}
+
+/* ================= 观察档案（文章页） ================= */
+.archive { max-width: 860px; margin: 3.2rem auto 0; }
+.archive-banner {
+  background: var(--red);
+  color: #fff; text-align: center;
+  padding: 1.4rem 1rem 1.1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12), 0 18px 50px rgba(0,0,0,0.15);
+}
+.archive-banner h1 {
+  font-family: "SimSun", "宋体", serif; font-weight: 900;
+  font-size: clamp(1.9rem, 6vw, 3.2rem); letter-spacing: 0.3em; text-indent: 0.3em;
+}
+.archive-banner .sub { letter-spacing: 0.4em; text-indent: 0.4em; font-size: 0.85rem; opacity: 0.9; margin-top: 0.4rem; }
+.archive-paper { padding: 2.6rem 3rem 2.4rem; }
+@media (max-width: 720px) { .archive-paper { padding: 1.8rem 1.4rem; } }
+.archive-no { text-align: center; letter-spacing: 0.1em; margin-bottom: 1.6rem; font-size: 1rem; }
+.archive-grid { display: grid; grid-template-columns: 230px 1fr; gap: 1.8rem; align-items: start; }
+@media (max-width: 720px) { .archive-grid { grid-template-columns: 1fr; } }
+.mugshot {
+  border: 2px solid var(--ink); background: #fff; padding: 0.5rem;
+  box-shadow: 4px 4px 0 rgba(0,0,0,0.15);
+}
+.mugshot .frame { position: relative; border: 1px solid var(--rule); background: #f2efe6; overflow: hidden; }
+.mugshot img { display: block; width: 100%; height: auto; filter: grayscale(15%) contrast(1.02); }
+.mugshot svg { display: block; width: 100%; height: auto; }
+.mugshot .cap { text-align: center; font-size: 0.85rem; padding: 0.45rem 0 0.1rem; color: var(--ink-soft); }
+/* 「已判决」斜盖红字章（方形旋转章） */
+.verdict-stamp {
+  position: absolute; top: 12%; right: -8%;
+  border: 3px solid var(--red);
+  color: var(--red);
+  font-family: "SimSun", "宋体", serif; font-weight: 900;
+  font-size: 1.5rem; letter-spacing: 0.25em; text-indent: 0.25em;
+  padding: 0.25rem 0.9rem;
+  transform: rotate(24deg);
+  opacity: 0.82;
+  background: rgba(253,252,246,0.25);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+table.profile { width: 100%; border-collapse: collapse; font-size: 0.98rem; }
+table.profile th, table.profile td { border: 1px solid var(--ink); padding: 0.5rem 0.7rem; text-align: left; }
+table.profile th { width: 6em; font-family: "SimSun", "宋体", serif; background: rgba(199,0,11,0.05); text-align: center; }
+.archive-h { font-family: "SimSun", "宋体", serif; font-weight: 700; font-size: 1.1rem; margin: 1.8rem 0 0.5rem; }
+.archive-h::before { content: "■ "; color: var(--red); }
+.archive-content h2 { font-family: "SimSun", "宋体", serif; font-weight: 700; font-size: 1.1rem; margin: 1.8rem 0 0.5rem; }
+.archive-content h2::before { content: "■ "; color: var(--red); }
+.archive-paper .doc-body p { line-height: 2; }
+.source-box {
+  margin-top: 2rem; border: 1.5px solid var(--ink); padding: 1rem 1.4rem;
+  font-size: 0.98rem; line-height: 2; background: rgba(199,0,11,0.04);
+}
+.source-box b { font-family: "SimSun", "宋体", serif; }
+.source-box ul { margin-left: 1.6em; }
+.source-box a { color: var(--red-deep); text-decoration: none; border-bottom: 1px dotted var(--red-deep); }
+.source-box a:hover { background: rgba(199,0,11,0.07); }
+.archive .sign-block { margin-top: 2.4rem; }

@@ -1,0 +1,50 @@
+{{ define "main" }}
+<div class="paper">
+  <div class="doc-head">
+    <div class="star">★</div>
+    <h1>人型害虫观察站文件</h1>
+    <div class="doc-no">害观档字〔2026〕第 1 号</div>
+  </div>
+  <hr class="red-rule"><hr class="red-rule thin">
+
+  <div class="doc-title">关于对已判决刑事案件涉案人员予以建档的通报</div>
+
+  <div class="doc-body">
+    <p>各位读者：</p>
+    <p>本站依据中央纪委国家监委、最高人民法院、最高人民检察院、新华社、央视新闻等权威渠道公开发布的信息，对已公布真实姓名、且有明确司法进展（立案、起诉、判决、核准、执行）的刑事案件涉案人员予以建档。</p>
+    <p>一、本登记表所载信息均以官方通报及权威媒体报道为唯一来源，案件状态以司法机关最新公开进展为准。</p>
+    <p>二、各人员完整档案附于《犯罪人员立案登记表》（见附件），点击「查阅」可阅览对应观察档案。</p>
+    <p>三、本站所载内容仅供资料检索与研究参考，不作任何商业用途；如有权威渠道更新的司法进展，本站将及时修订。</p>
+  </div>
+
+  <div class="attachment-label">附件：犯罪人员立案登记表</div>
+  <table class="cases">
+    <thead>
+      <tr><th>建档编号</th><th>姓名</th><th>罪名</th><th>刑种</th><th>案件状态</th><th>查阅</th></tr>
+    </thead>
+    <tbody>
+      {{ range .Site.RegularPages.ByWeight }}
+      <tr>
+        <td>{{ .Params.archiveno }}</td>
+        <td>{{ .Params.name }}</td>
+        <td>{{ .Params.chargesshort }}</td>
+        <td>{{ .Params.sentence }}</td>
+        <td>{{ .Params.status }}</td>
+        <td><a href="{{ .RelPermalink }}">查阅</a></td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+
+  <div class="sign-block">
+    {{ partial "seal.html" . }}
+    <div class="org">人型害虫观察站</div>
+    <div>二〇二六年十月二十三日</div>
+  </div>
+
+  <hr class="foot-rule">
+  <div class="cc"><b>抄送：</b>本站读者。</div>
+  <div class="cc">&nbsp;&nbsp;2026年10月23日更新</div>
+  <div class="print-line"><span>（共印 1 份）</span><span>害观档字〔2026〕第 1 号</span></div>
+</div>
+{{ end }}

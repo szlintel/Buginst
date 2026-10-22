@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}｜{{ .Site.Title }}{{ end }}</title>
+<meta name="description" content="{{ if .IsHome }}人型害虫观察站：依据权威公开信息对已判决刑事案件涉案人员予以建档。{{ else }}{{ .Params.archiveno }} {{ .Params.name }} {{ .Params.charges }}{{ end }}">
+<link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+</head>
+<body>
+{{ block "main" . }}{{ end }}
+</body>
+</html>

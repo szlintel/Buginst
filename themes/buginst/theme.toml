@@ -1,0 +1,9 @@
+name = 'buginst'
+description = '人型害虫观察站：红头文件首页 × 犯罪人员观察档案'
+homepage = 'https://buginst.com/'
+tags = ['archive', 'document']
+features = []
+
+[author]
+  name = '人型害虫观察站'
+  homepage = 'https://buginst.com/'
