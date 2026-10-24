@@ -1,3 +1,10 @@
 /public/
 /resources/_gen/
 /.hugo_build.lock
+
+# 依赖与锁文件（体积大，且 CI 自装）
+/node_modules/
+/package-lock.json
+
+# 原始资料（未编辑的案源素材，体积大，且仓库为 public，勿误提交）
+/BugInst/

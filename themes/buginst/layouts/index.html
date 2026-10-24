@@ -37,14 +37,13 @@
   </table>
 
   <div class="sign-block">
-    {{ partial "seal.html" . }}
     <div class="org">人型害虫观察站</div>
-    <div>二〇二六年十月二十三日</div>
+    <div>{{ now.Format "2006年01月02日" }}</div>
   </div>
 
   <hr class="foot-rule">
   <div class="cc"><b>抄送：</b>本站读者。</div>
-  <div class="cc">&nbsp;&nbsp;2026年10月23日更新</div>
+  <div class="cc">&nbsp;&nbsp;{{ now.Format "2006年01月02日" }}更新</div>
   <div class="print-line"><span>（共印 1 份）</span><span>害观档字〔2026〕第 1 号</span></div>
 </div>
 {{ end }}

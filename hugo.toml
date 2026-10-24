@@ -1,5 +1,5 @@
 # 部署到 Cloudflare Pages / GitHub Pages 后，替换为实际域名
-baseURL = 'https://buginst.com/'
+baseURL = 'https://buginst.pages.dev/'
 languageCode = 'zh-CN'
 title = '人型害虫观察站'
 theme = 'buginst'

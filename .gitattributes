@@ -1,0 +1,6 @@
+# 强制统一为 LF，避免 CRLF/LF 漂移污染历史
+* text=auto eol=lf
+
+# 构建产物与缓存
+/public/ linguist-generated=true
+/resources/_gen/ linguist-generated=true
