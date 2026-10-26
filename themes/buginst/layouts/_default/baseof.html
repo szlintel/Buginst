@@ -1,13 +1,56 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}｜{{ .Site.Title }}{{ end }}</title>
-<meta name="description" content="{{ if .IsHome }}人型害虫观察站：依据权威公开信息对已判决刑事案件涉案人员予以建档。{{ else }}{{ .Params.archiveno }} {{ .Params.name }} {{ .Params.charges }}{{ end }}">
+<meta name="description" content="{{ if .IsHome }}依据权威公开信息，对已公布真实姓名、有明确司法进展的刑事案件涉案人员逐一建档的检索库。{{ else }}{{ .Params.name }} {{ .Params.charges }} {{ .Params.sentence }}{{ end }}">
 <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+<script>
+/* 主题：auto / light / dark，localStorage 记忆；head 内先解析避免暗色闪白 */
+(function(){try{var p=localStorage.getItem('hi-theme')||'auto';var d=(p==='dark')||(p==='auto'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');document.documentElement.setAttribute('data-theme-pref',p);}catch(e){document.documentElement.setAttribute('data-theme-pref','auto');}})();
+</script>
 </head>
 <body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="brand" href="{{ "/" | relURL }}">
+      <span class="brand-mark" aria-hidden="true">★</span>
+      <span class="brand-text">
+        <span class="brand-title">人型害虫观察站</span>
+        <span class="brand-sub">刑事案件权威档案库</span>
+      </span>
+    </a>
+    <nav class="site-nav">
+      <a href="{{ "/" | relURL }}"{{ if .IsHome }} class="active"{{ end }}>档案索引</a>
+      <a href="#about">关于本库</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换明暗主题" title="切换主题（自动 / 亮 / 暗）">
+        <span id="themeIcon">◐</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" role="main">
 {{ block "main" . }}{{ end }}
+</main>
+
+<footer class="site-footer" id="about">
+  <div class="wrap footer-inner">
+    <div class="foot-col">
+      <h3>关于本库</h3>
+      <p>本站依据中央纪委国家监委、最高人民法院、最高人民检察院、新华社、央视新闻等权威渠道公开发布的信息，对已公布真实姓名、且有明确司法进展（立案、起诉、判决、核准、执行）的刑事案件涉案人员予以建档。</p>
+    </div>
+    <div class="foot-col">
+      <h3>使用边界</h3>
+      <p>所载内容仅供资料检索与研究参考，不作任何商业用途；案件状态以司法机关最新公开进展为准。如权威渠道更新，本站将及时修订。涉及指控阶段的案件，均坚持无罪推定、不作主观定性。</p>
+    </div>
+  </div>
+  <div class="wrap foot-meta">人型害虫观察站 · {{ now.Format "2006年01月02日" }}更新 · 共 {{ len .Site.RegularPages }} 份档案</div>
+</footer>
+
+<script src="{{ "js/app.js" | relURL }}" defer></script>
 </body>
 </html>

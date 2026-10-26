@@ -1,63 +1,76 @@
 {{ define "main" }}
-<div class="archive">
-  <div class="archive-banner">
-    <h1>人型害虫观察档案</h1>
-    <div class="sub">CRIMINAL ARCHIVE · {{ .Params.archiveno }}</div>
-  </div>
-  <div class="paper archive-paper">
+{{ $p := . }}
+<article class="article">
+  <a class="back" href="{{ "/" | relURL }}"><span aria-hidden="true">←</span> 返回档案索引</a>
 
-    <div class="archive-no">建档编号：{{ .Params.archiveno }}</div>
-
-    <div class="archive-grid">
-      <div class="mugshot">
-        <div class="frame">
-          {{ with .Params.photo }}
-          <img src="{{ . | relURL }}" alt="{{ $.Params.name }}">
-          {{ else }}
-          <svg viewBox="0 0 200 240" aria-label="影像暂缺">
-            <rect width="200" height="240" fill="#eceadf"></rect>
-            <g fill="#8b8778">
-              <circle cx="100" cy="88" r="38"></circle>
-              <path d="M40 200 Q100 120 160 200 L160 240 L40 240 Z"></path>
-            </g>
-            <text x="100" y="228" text-anchor="middle" font-size="13" fill="#6b6659">（影像暂缺）</text>
-          </svg>
-          {{ end }}
-          <div class="verdict-stamp">已判决</div>
-        </div>
-        {{ with .Params.photocap }}<div class="cap">{{ . }}</div>{{ end }}
-      </div>
-      <table class="profile">
-        <tbody>
-          {{ with .Params.name }}<tr><th>姓　　名</th><td>{{ . }}</td></tr>{{ end }}
-          {{ with .Params.identity }}<tr><th>身　　份</th><td>{{ . }}</td></tr>{{ end }}
-          {{ with .Params.charges }}<tr><th>罪　　名</th><td>{{ . }}</td></tr>{{ end }}
-          {{ with .Params.sentence }}<tr><th>刑　　种</th><td>{{ . }}</td></tr>{{ end }}
-          {{ with .Params.status }}<tr><th>案件状态</th><td>{{ . }}</td></tr>{{ end }}
-          {{ with .Params.judgmentdate }}<tr><th>判决日期</th><td>{{ . }}</td></tr>{{ end }}
-        </tbody>
-      </table>
+  <header class="article-head">
+    <div class="a-badges">
+      <span class="badge-no">建档编号 {{ .Params.archiveno }}</span>
+      <span class="badge-status">{{ .Params.status }}</span>
     </div>
+    <h1 class="a-title">{{ .Params.name }}</h1>
+    <p class="a-case">{{ .Params.identity }}</p>
+  </header>
 
-    <div class="doc-body archive-content">
-      {{ .Content }}
-    </div>
-
-    {{ with .Params.sources }}
-    <div class="source-box">
-      <b>权威来源：</b>
-      <ul>
-        {{ range . }}
-        <li>{{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .text }}</a>{{ else }}{{ .text }}{{ end }}</li>
+  <div class="meta-panel">
+    <figure class="mugshot">
+      <div class="frame">
+        {{ with .Params.photo }}
+        <img src="{{ . | relURL }}" alt="{{ $.Params.name }}" loading="lazy">
+        {{ else }}
+        <svg viewBox="0 0 200 240" role="img" aria-label="影像暂缺">
+          <rect width="200" height="240" fill="var(--mug-bg)"></rect>
+          <g fill="var(--mug-fg)">
+            <circle cx="100" cy="86" r="36"></circle>
+            <path d="M42 198 Q100 122 158 198 L158 240 L42 240 Z"></path>
+          </g>
+          <text x="100" y="226" text-anchor="middle" font-size="13" fill="var(--muted)">（影像暂缺）</text>
+        </svg>
         {{ end }}
-      </ul>
-    </div>
-    {{ end }}
+      </div>
+      {{ with .Params.photocap }}<figcaption class="cap">{{ . }}</figcaption>{{ end }}
+    </figure>
 
-    <div class="sign-block">
-      <div class="org">人型害虫观察站</div>
-      <div>{{ now.Format "2006年01月02日" }}</div>
-    </div>
+    <table class="profile">
+      <tbody>
+        <tr><th>姓　　名</th><td>{{ .Params.name }}</td></tr>
+        <tr><th>身　　份</th><td>{{ .Params.identity }}</td></tr>
+        <tr><th>罪　　名</th><td>{{ .Params.charges }}</td></tr>
+        <tr><th>刑　　种</th><td><b class="hl">{{ .Params.sentence }}</b></td></tr>
+        <tr><th>案件状态</th><td>{{ .Params.status }}</td></tr>
+        {{ with .Params.judgmentdate }}<tr><th>判决日期</th><td>{{ . }}</td></tr>{{ end }}
+      </tbody>
+    </table>
   </div>
-</div>
+
+  <div class="prose">
+    {{ .Content }}
+  </div>
+
+  {{ with .Params.sources }}
+  <section class="sources">
+    <h2 class="src-title"><span aria-hidden="true">▤</span> 权威来源</h2>
+    <ul>
+      {{ range . }}
+      <li>{{ if .url }}<a href="{{ .url }}" target="_blank" rel="noopener noreferrer">{{ .text }}<span class="ext" aria-hidden="true">↗</span></a>{{ else }}{{ .text }}{{ end }}</li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+
+  <nav class="post-nav" aria-label="上下份档案">
+    {{ with $p.PrevInSection }}
+    <a class="pn pn--prev" href="{{ .RelPermalink }}"><span class="pn-k">← 上一份</span><b class="pn-t">{{ .Params.name }}</b></a>
+    {{ else }}
+    <span class="pn pn--empty"></span>
+    {{ end }}
+    {{ with $p.NextInSection }}
+    <a class="pn pn--next" href="{{ .RelPermalink }}"><span class="pn-k">下一份 →</span><b class="pn-t">{{ .Params.name }}</b></a>
+    {{ else }}
+    <span class="pn pn--empty"></span>
+    {{ end }}
+  </nav>
+
+  <p class="disclaimer">本档案基于公开权威信息整理，仅供资料检索与研究参考，不构成任何法律意见。</p>
+</article>
 {{ end }}

@@ -8,3 +8,6 @@
 
 # 原始资料（未编辑的案源素材，体积大，且仓库为 public，勿误提交）
 /BugInst/
+
+# 本地密钥（含 Cloudflare API Token，切勿提交）
+/.env

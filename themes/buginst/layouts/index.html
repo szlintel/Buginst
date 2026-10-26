@@ -1,49 +1,70 @@
 {{ define "main" }}
-<div class="paper">
-  <div class="doc-head">
-    <div class="star">★</div>
-    <h1>人型害虫观察站文件</h1>
-    <div class="doc-no">害观档字〔2026〕第 1 号</div>
+{{ $pages := .Site.RegularPages.ByWeight }}
+{{ $death := 0 }}{{ $fixed := 0 }}{{ $life := 0 }}{{ $term := 0 }}
+{{ range $pages }}
+  {{ $s := .Params.sentence }}
+  {{ if in $s "立即执行" }}{{ $death = add $death 1 }}
+  {{ else if in $s "死缓" }}{{ $fixed = add $fixed 1 }}
+  {{ else if in $s "无期" }}{{ $life = add $life 1 }}
+  {{ else if in $s "有期" }}{{ $term = add $term 1 }}
+  {{ end }}
+{{ end }}
+
+<section class="hero">
+  <div class="hero-kicker"><span class="dot"></span>CRIMINAL ARCHIVE · 权威公开信息建档</div>
+  <h1 class="hero-title">已判决刑事案件<br>涉案人员档案库</h1>
+  <p class="hero-lead">逐人建档，来源可溯。覆盖缅北电诈集团案、职务犯罪、重大刑事案等已公布真实姓名且有明确司法进展的涉案人员，供检索、核对与研究参考。</p>
+  <div class="stats">
+    <div class="stat"><b>{{ len $pages }}</b><span>建档总数</span></div>
+    <div class="stat stat-death"><b>{{ $death }}</b><span>死刑（立即执行）</span></div>
+    <div class="stat"><b>{{ $fixed }}</b><span>死缓</span></div>
+    <div class="stat"><b>{{ $life }}</b><span>无期徒刑</span></div>
+    <div class="stat"><b>{{ $term }}</b><span>有期徒刑</span></div>
   </div>
-  <hr class="red-rule"><hr class="red-rule thin">
+</section>
 
-  <div class="doc-title">关于对已判决刑事案件涉案人员予以建档的通报</div>
-
-  <div class="doc-body">
-    <p>各位读者：</p>
-    <p>本站依据中央纪委国家监委、最高人民法院、最高人民检察院、新华社、央视新闻等权威渠道公开发布的信息，对已公布真实姓名、且有明确司法进展（立案、起诉、判决、核准、执行）的刑事案件涉案人员予以建档。</p>
-    <p>一、本登记表所载信息均以官方通报及权威媒体报道为唯一来源，案件状态以司法机关最新公开进展为准。</p>
-    <p>二、各人员完整档案附于《犯罪人员立案登记表》（见附件），点击「查阅」可阅览对应观察档案。</p>
-    <p>三、本站所载内容仅供资料检索与研究参考，不作任何商业用途；如有权威渠道更新的司法进展，本站将及时修订。</p>
+<section class="index">
+  <div class="toolbar">
+    <div class="search-wrap">
+      <span class="search-ico" aria-hidden="true">⌕</span>
+      <input class="search" id="search" type="search" placeholder="搜索姓名 / 身份 / 罪名 / 建档编号…" aria-label="搜索档案">
+    </div>
+    <div class="filters" id="filters" role="group" aria-label="按刑种筛选">
+      <button class="chip active" type="button" data-cat="all">全部</button>
+      <button class="chip" type="button" data-cat="death">死刑</button>
+      <button class="chip" type="button" data-cat="fixed">死缓</button>
+      <button class="chip" type="button" data-cat="life">无期</button>
+      <button class="chip" type="button" data-cat="term">有期</button>
+    </div>
   </div>
 
-  <div class="attachment-label">附件：犯罪人员立案登记表</div>
-  <table class="cases">
+  <div class="index-head">
+    <span class="count" id="count">共 {{ len $pages }} 条</span>
+    <span class="idx-hint">点击行进入对应档案</span>
+  </div>
+
+  <table class="case-table">
     <thead>
-      <tr><th>建档编号</th><th>姓名</th><th>罪名</th><th>刑种</th><th>案件状态</th><th>查阅</th></tr>
+      <tr><th class="col-no">建档编号</th><th>姓名 / 身份</th><th class="col-charges">罪名</th><th class="col-sentence">刑种</th><th class="col-status">案件状态</th></tr>
     </thead>
-    <tbody>
-      {{ range .Site.RegularPages.ByWeight }}
-      <tr>
-        <td>{{ .Params.archiveno }}</td>
-        <td>{{ .Params.name }}</td>
-        <td>{{ .Params.chargesshort }}</td>
-        <td>{{ .Params.sentence }}</td>
-        <td>{{ .Params.status }}</td>
-        <td><a href="{{ .RelPermalink }}">查阅</a></td>
+    <tbody id="caseBody">
+      {{ range $pages }}
+      {{ $s := .Params.sentence }}
+      {{ $cat := "other" }}
+      {{ if in $s "立即执行" }}{{ $cat = "death" }}{{ else if in $s "死缓" }}{{ $cat = "fixed" }}{{ else if in $s "无期" }}{{ $cat = "life" }}{{ else if in $s "有期" }}{{ $cat = "term" }}{{ end }}
+      <tr class="case-row" data-cat="{{ $cat }}" data-search="{{ .Params.name }} {{ .Params.identity }} {{ .Params.charges }} {{ .Params.archiveno }} {{ .Params.status }}">
+        <td class="col-no mono">{{ .Params.archiveno }}</td>
+        <td class="c-name">
+          <a href="{{ .RelPermalink }}"><b>{{ .Params.name }}</b></a>
+          <span class="c-id">{{ .Params.identity }}</span>
+        </td>
+        <td class="col-charges">{{ .Params.chargesshort }}</td>
+        <td class="col-sentence"><span class="tag tag--{{ $cat }}">{{ .Params.sentence }}</span></td>
+        <td class="col-status">{{ .Params.status }}</td>
       </tr>
       {{ end }}
     </tbody>
   </table>
-
-  <div class="sign-block">
-    <div class="org">人型害虫观察站</div>
-    <div>{{ now.Format "2006年01月02日" }}</div>
-  </div>
-
-  <hr class="foot-rule">
-  <div class="cc"><b>抄送：</b>本站读者。</div>
-  <div class="cc">&nbsp;&nbsp;{{ now.Format "2006年01月02日" }}更新</div>
-  <div class="print-line"><span>（共印 1 份）</span><span>害观档字〔2026〕第 1 号</span></div>
-</div>
+  <p class="empty" id="empty" hidden>没有匹配的档案，请调整关键词或筛选条件。</p>
+</section>
 {{ end }}
