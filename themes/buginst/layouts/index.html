@@ -68,7 +68,7 @@
       {{ if in $s "立即执行" }}{{ $cat = "death" }}{{ else if in $s "死缓" }}{{ $cat = "fixed" }}{{ else if in $s "无期" }}{{ $cat = "life" }}{{ else if in $s "有期" }}{{ $cat = "term" }}{{ end }}
       {{ $c := .Params.charges }}
       {{ $chg := "other" }}
-      {{ if or (in $c "犯罪集团") (in $c "电诈") (in $c "电信网络诈骗") (in $c "帮助信息网络") (in .Params.identity "魏家") (in .Params.identity "明家") (in .Params.identity "白家") (in .Params.identity "缅北") (in .Params.identity "果敢") (in .Params.title "缅北") }}{{ $chg = "group" }}
+      {{ if and (not (or (in .Params.identity "唐山") (in .Params.identity "恶势力"))) (or (in $c "犯罪集团") (in $c "电诈") (in $c "电信网络诈骗") (in $c "帮助信息网络") (in .Params.identity "魏家") (in .Params.identity "明家") (in .Params.identity "白家") (in .Params.identity "缅北") (in .Params.identity "果敢") (in .Params.title "缅北")) }}{{ $chg = "group" }}
       {{ else if or (in $c "非法吸收公众存款") (in $c "集资诈骗") (in $c "违法发放贷款") (in $c "欺诈发行") (in $c "违规披露") (in $c "违法运用资金") }}{{ $chg = "econ" }}
       {{ else if or (in $c "受贿") (in $c "贪污") (in $c "滥用职权") (in $c "职务侵占") (in $c "挪用资金") (in $c "行贿") }}{{ $chg = "duty" }}
       {{ else if in $c "毒品" }}{{ $chg = "drug" }}
