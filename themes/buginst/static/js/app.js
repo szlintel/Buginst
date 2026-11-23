@@ -23,21 +23,38 @@
   }
   apply(pref());
 
-  /* ---------- 搜索 + 刑种筛选 ---------- */
+  /* ---------- 搜索 + 刑种筛选 + 罪名分类筛选（三维叠加） ---------- */
   var search = document.getElementById("search");
   var rows = Array.prototype.slice.call(document.querySelectorAll(".case-row"));
-  var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
   var count = document.getElementById("count");
   var empty = document.getElementById("empty");
-  var activeCat = "all";
+  var activeCat = "all";   // 刑种
+  var activeChg = "all";   // 罪名分类
+
+  // 绑定一组互斥筛选：每个维度各自维护 active
+  function bindChips(groupId, attr, onChange) {
+    var box = document.getElementById(groupId);
+    if (!box) return;
+    var list = Array.prototype.slice.call(box.querySelectorAll(".chip"));
+    list.forEach(function (c) {
+      c.addEventListener("click", function () {
+        list.forEach(function (x) { x.classList.remove("active"); });
+        c.classList.add("active");
+        onChange(c.getAttribute(attr));
+      });
+    });
+  }
+  bindChips("filters", "data-cat", function (v) { activeCat = v; update(); });
+  bindChips("chgFilters", "data-chg", function (v) { activeChg = v; update(); });
 
   function update() {
     var q = search ? search.value.trim().toLowerCase() : "";
     var n = 0;
     rows.forEach(function (r) {
       var okCat = activeCat === "all" || r.getAttribute("data-cat") === activeCat;
+      var okChg = activeChg === "all" || r.getAttribute("data-chg") === activeChg;
       var okQ = !q || (r.getAttribute("data-search") || "").toLowerCase().indexOf(q) > -1;
-      var show = okCat && okQ;
+      var show = okCat && okChg && okQ;
       r.style.display = show ? "" : "none";
       if (show) n++;
     });
@@ -45,14 +62,6 @@
     if (empty) empty.hidden = n !== 0;
   }
   if (search) search.addEventListener("input", update);
-  chips.forEach(function (c) {
-    c.addEventListener("click", function () {
-      chips.forEach(function (x) { x.classList.remove("active"); });
-      c.classList.add("active");
-      activeCat = c.getAttribute("data-cat");
-      update();
-    });
-  });
   update();
 
   /* ---------- 阅读进度条 ---------- */

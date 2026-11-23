@@ -80,6 +80,12 @@ a{color:var(--red-deep)}
 .chip:hover{border-color:var(--red);color:var(--red-deep)}
 .chip.active{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
 
+/* 罪名分类筛选（第二行，与刑种叠加） */
+.chg-bar{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem;margin:.2rem 0 1rem}
+.filter-label{font-size:.82rem;font-weight:700;color:var(--ink-2);font-family:var(--serif);white-space:nowrap;padding-left:.15rem}
+.chip--chg{font-size:.86rem;padding:.4rem .85rem}
+.chip--chg.active{background:var(--red-deep);border-color:var(--red-deep)}
+
 .index-head{display:flex;justify-content:space-between;align-items:baseline;margin:.4rem .2rem .7rem}
 .count{font-size:.9rem;color:var(--muted);font-weight:600}
 .idx-hint{font-size:.82rem;color:var(--muted)}
@@ -92,13 +98,32 @@ a{color:var(--red-deep)}
 .case-row{transition:background .12s}
 .case-row:hover{background:var(--red-tint)}
 .col-no{white-space:nowrap;color:var(--muted);font-size:.85rem}
-.col-charges{max-width:16rem}
+.col-charges{width:26%;min-width:15rem}
 .col-sentence{white-space:nowrap}
 .col-status{color:var(--ink-2);font-size:.9rem;max-width:11rem}
 .c-name a{text-decoration:none;color:var(--ink)}
 .c-name b{font-family:var(--serif);font-size:1.08rem;font-weight:800}
 .c-name a:hover b{color:var(--red-deep)}
 .c-id{display:block;font-size:.8rem;color:var(--muted);margin-top:.15rem;line-height:1.4}
+
+/* 罪名标签：突出罪名，按罪名大类着色 */
+.charge-tag{
+  display:inline-block;font-size:.88rem;font-weight:700;line-height:1.5;
+  padding:.22rem .55rem;border-radius:5px;
+  border-left:3px solid var(--chg-c,var(--red));
+  background:var(--chg-bg,var(--red-tint));color:var(--ink);
+}
+.charge-tag--group   {--chg-c:#b8860b;--chg-bg:rgba(184,134,11,.10)}
+.charge-tag--duty    {--chg-c:var(--red-deep);--chg-bg:var(--red-tint)}
+.charge-tag--violence{--chg-c:#9c2f2f;--chg-bg:rgba(156,47,47,.10)}
+.charge-tag--drug    {--chg-c:#6a3fa0;--chg-bg:rgba(106,63,160,.12)}
+.charge-tag--econ    {--chg-c:#1f6b5a;--chg-bg:rgba(31,107,90,.12)}
+.charge-tag--food    {--chg-c:#8a6d1f;--chg-bg:rgba(138,109,31,.12)}
+.charge-tag--other   {--chg-c:var(--muted);--chg-bg:var(--surface-2)}
+[data-theme="dark"] .charge-tag--group   {--chg-c:#e0b84c;--chg-bg:rgba(224,184,76,.16)}
+[data-theme="dark"] .charge-tag--violence{--chg-c:#e07a7a;--chg-bg:rgba(224,122,122,.16)}
+[data-theme="dark"] .charge-tag--drug    {--chg-c:#b48ce6;--chg-bg:rgba(180,140,230,.18)}
+[data-theme="dark"] .charge-tag--econ    {--chg-c:#4fb89c;--chg-bg:rgba(79,184,156,.16)}
 
 /* 刑种标签 */
 .tag{display:inline-block;padding:.24rem .6rem;border-radius:6px;font-size:.82rem;font-weight:600;line-height:1.3;border:1px solid transparent}
@@ -187,8 +212,10 @@ table.profile .hl{color:var(--red-deep);font-family:var(--serif);font-size:1.02r
   .mugshot{max-width:240px}
   .footer-inner{grid-template-columns:1fr;gap:1.4rem}
   .post-nav{grid-template-columns:1fr}
-  .col-charges,.col-status{display:none}
-  .case-table thead .col-charges,.case-table thead .col-status{display:none}
+  .col-status{display:none}
+  .case-table thead .col-status{display:none}
+  .col-charges{min-width:0;width:auto}
+  .charge-tag{font-size:.82rem;white-space:normal;word-break:break-word}
   .hero{padding-top:2rem}
   .brand-sub{display:none}
 }

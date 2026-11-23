@@ -38,6 +38,20 @@
     </div>
   </div>
 
+  <div class="chg-bar">
+    <span class="filter-label">罪名分类</span>
+    <div class="filters" id="chgFilters" role="group" aria-label="按罪名分类筛选">
+      <button class="chip chip--chg active" type="button" data-chg="all">全部罪名</button>
+      <button class="chip chip--chg" type="button" data-chg="duty">职务犯罪</button>
+      <button class="chip chip--chg" type="button" data-chg="group">电诈 / 集团</button>
+      <button class="chip chip--chg" type="button" data-chg="violence">暴力犯罪</button>
+      <button class="chip chip--chg" type="button" data-chg="drug">毒品犯罪</button>
+      <button class="chip chip--chg" type="button" data-chg="econ">金融经济</button>
+      <button class="chip chip--chg" type="button" data-chg="food">食品药品</button>
+      <button class="chip chip--chg" type="button" data-chg="other">其他</button>
+    </div>
+  </div>
+
   <div class="index-head">
     <span class="count" id="count">共 {{ len $pages }} 条</span>
     <span class="idx-hint">点击行进入对应档案</span>
@@ -52,13 +66,22 @@
       {{ $s := .Params.sentence }}
       {{ $cat := "other" }}
       {{ if in $s "立即执行" }}{{ $cat = "death" }}{{ else if in $s "死缓" }}{{ $cat = "fixed" }}{{ else if in $s "无期" }}{{ $cat = "life" }}{{ else if in $s "有期" }}{{ $cat = "term" }}{{ end }}
-      <tr class="case-row" data-cat="{{ $cat }}" data-search="{{ .Params.name }} {{ .Params.identity }} {{ .Params.charges }} {{ .Params.archiveno }} {{ .Params.status }}">
+      {{ $c := .Params.charges }}
+      {{ $chg := "other" }}
+      {{ if or (in $c "犯罪集团") (in $c "电诈") (in $c "电信网络诈骗") (in $c "帮助信息网络") }}{{ $chg = "group" }}
+      {{ else if or (in $c "非法吸收公众存款") (in $c "集资诈骗") (in $c "违法发放贷款") (in $c "欺诈发行") (in $c "违规披露") (in $c "违法运用资金") }}{{ $chg = "econ" }}
+      {{ else if or (in $c "受贿") (in $c "贪污") (in $c "滥用职权") (in $c "职务侵占") (in $c "挪用资金") (in $c "行贿") }}{{ $chg = "duty" }}
+      {{ else if in $c "毒品" }}{{ $chg = "drug" }}
+      {{ else if in $c "食品" }}{{ $chg = "food" }}
+      {{ else if or (in $c "故意杀人") (in $c "故意伤害") (in $c "抢劫") (in $c "绑架") (in $c "寻衅滋事") (in $c "聚众斗殴") (in $c "危害公共安全") (in $c "虐待被监管人") }}{{ $chg = "violence" }}
+      {{ end }}
+      <tr class="case-row" data-cat="{{ $cat }}" data-chg="{{ $chg }}" data-search="{{ .Params.name }} {{ .Params.identity }} {{ .Params.charges }} {{ .Params.archiveno }} {{ .Params.status }}">
         <td class="col-no mono">{{ .Params.archiveno }}</td>
         <td class="c-name">
           <a href="{{ .RelPermalink }}"><b>{{ .Params.name }}</b></a>
           <span class="c-id">{{ .Params.identity }}</span>
         </td>
-        <td class="col-charges">{{ .Params.chargesshort }}</td>
+        <td class="col-charges"><span class="charge-tag charge-tag--{{ $chg }}" title="{{ .Params.charges }}">{{ .Params.chargesshort }}</span></td>
         <td class="col-sentence"><span class="tag tag--{{ $cat }}">{{ .Params.sentence }}</span></td>
         <td class="col-status">{{ .Params.status }}</td>
       </tr>
